@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+<b>This the the explore page</b>
+
+{% for user in users%}
+    <br> <a href = "{% url 'profile' user.username %}"> {{user.username}} </a>
+{% endfor %}
+{% endblock %}
