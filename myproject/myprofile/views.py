@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from datetime import *
 
 def ProfileView(request,username):
-    context = {'user': User.objects.get(username = username)}
+    context = {'pro': User.objects.get(username = username)}
     return render(request, 'profile.html',context)
 
 
@@ -17,17 +17,23 @@ def UpdateView(request,username):
     response = requests.get(f" https://api.github.com/users/{username}")
     response = response.json()
     f = "%Y-%m-%dT%H:%M:%SZ"
-    if response:
+    if response.get('followers') != None:
         user.profiles.numOfFollowers = response['followers']
-        user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
+        now = datetime.now()
+        #now = now.strftime("%b %-d,%Y %-I:%M%p")
+        user.profiles.lastUpdated = now
+        user.profiles.save()
+        #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
 
     profile = user.profiles
     response2 = requests.get(f" https://api.github.com/users/{username}/repos")
     response2 = response2.json()
-    if response2:
+
+    if response:
         for repo in response2:
-            name = repo['name']
-            stars = repo['stargazers_count']
-            t,c = repository.objects.update_or_create(profiles = profile, name = name , defaults={'name' : name, 'stars' : stars})
-    context = {'user':user}
+            if repo.get('name'):
+                name = repo['name']
+                stars = repo['stargazers_count']
+                t,c = repository.objects.update_or_create(profiles = profile, name = name , defaults={'name' : name, 'stars' : stars})
+    context = {'pro':user}
     return render(request, 'profile.html', context) 

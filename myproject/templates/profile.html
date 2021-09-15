@@ -3,12 +3,13 @@
 {% block title %}myProfile{% endblock %}
 
 {% block content %}
-<H2>{{user.first_name}} {{user.last_name}} (@{{user.username}})</H2> 
+<H2>{{pro.first_name}} {{pro.last_name}} (@{{pro.username}})</H2> 
 <ol>
-    <li>{{user.profiles.numOfFollowers}} Followers
-    <li>profile last updated: {{user.profiles.lastUpdated}} <button type = "button" value ="hello there" onclick = "location.href = '{% url "update" user.username %}'" > hello </button>
+    <li>{{pro.profiles.numOfFollowers}} Followers
+    <li>profile last updated: {{pro.profiles.lastUpdated}} {% if pro.username == user.username %}<button type = "button"  onclick = "location.href = '{% url 'update' pro.username %}'" > Update </button> {%endif%}
 </ol>
-{% for obj in user.profiles.repository_set.all %}
+
+{% for obj in pro.profiles.repository_set.all %}
     <ul>
         <li> {{ obj.name }} - {{obj.stars}} Stars</li>
     </ul> 

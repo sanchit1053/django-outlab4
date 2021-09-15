@@ -4,6 +4,6 @@ from django.contrib.auth.models import User
 
 urlpatterns =[ 
      path('<str:username>/', ProfileView, name = 'profile'),
-     path('<str:username>/', UpdateView, name = 'update')
+     path('<str:username>/S/', UpdateView, name = 'update')
 
 ]
