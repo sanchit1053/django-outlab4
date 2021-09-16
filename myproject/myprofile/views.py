@@ -6,6 +6,7 @@ from .models import profiles,repository
 import requests
 from django.contrib.auth.models import User
 from datetime import *
+from django.utils import timezone
 
 def ProfileView(request,username):
     context = {'pro': User.objects.get(username = username)}
@@ -19,8 +20,9 @@ def UpdateView(request,username):
     f = "%Y-%m-%dT%H:%M:%SZ"
     if response.get('followers') != None:
         user.profiles.numOfFollowers = response['followers']
-        now = datetime.now()
+        #now = datetime.now()
         #now = now.strftime("%b %-d,%Y %-I:%M%p")
+        now = timezone.now()
         user.profiles.lastUpdated = now
         user.profiles.save()
         #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
