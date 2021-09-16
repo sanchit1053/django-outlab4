@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime
+from django.utils import timezone
 import requests
 # Create your models here
 
 class profiles(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, )
     numOfFollowers = models.IntegerField(default = 0)
-    lastUpdated = models.DateTimeField(default = datetime.datetime.now())
+    lastUpdated = models.DateTimeField(default = timezone.now)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
