@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #    dotenv.load_dotenv(dotenv_file)
 
 # UPDATE secret key
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY','t3tqvpbl-20xa+=mppx1+b@^u=_h!ej@1v3m^j_=%8c5pe!v1-')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,7 +94,6 @@ DATABASES = {
         'PASSWORD': '1e5dd4e1f642dc7d50b7687caa27b61ce19569cba82a54dfd0719c64e6dce522',
         'PORT': 5432,
         'HOST': 'ec2-44-198-146-224.compute-1.amazonaws.com'
-        
     }
 }
 

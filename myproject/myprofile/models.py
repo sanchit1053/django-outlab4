@@ -9,19 +9,22 @@ import requests
 class profiles(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, )
     numOfFollowers = models.IntegerField(default = 0)
-    lastUpdated = models.DateTimeField(default = datetime.datetime(1,1,1,0,0,0))
+    lastUpdated = models.DateTimeField(default = datetime.datetime.now())
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             profiles.objects.create(user=instance)
-        username = None
-        username = instance.username
-        response = requests.get(f" https://api.github.com/users/{username}")
-        response = response.json()
-        if response:
-            instance.profiles.numOfFollowers = response['followers']
-            instance.profiles.lastUpdated = response['updated_at'] 
+
+        # username = None
+        # username = instance.username
+        # response = requests.get(f" https://api.github.com/users/{username}")
+        # response = response.json()
+        # if response:
+        #     instance.profiles.numOfFollowers = response['followers']
+        #     #instance.profiles.lastUpdated = response['updated_at']
+        #     now = datetime.now()
+        #     user.profiles.lastUpdated = now 
 
 
     @receiver(post_save, sender=User)
