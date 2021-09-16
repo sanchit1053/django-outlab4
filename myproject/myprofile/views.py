@@ -20,12 +20,12 @@ def UpdateView(request,username):
     f = "%Y-%m-%dT%H:%M:%SZ"
     if response.get('followers') != None:
         user.profiles.numOfFollowers = response['followers']
-        now = datetime.now()
+        #now = datetime.now()
         #now = now.strftime("%b %-d,%Y %-I:%M%p")
-        #now = timezone.now()
+        now = timezone.now()
         #now.setHours(now.getHours()+ 5)
         #now.setMinutes(now.getMinutes()+30)
-        now = now + timedelta(hours = 5, minutes = 30)
+        #now = now + timedelta(hours = 5, minutes = 30)
         user.profiles.lastUpdated = now
         user.profiles.save()
         #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
