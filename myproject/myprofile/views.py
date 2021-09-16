@@ -24,8 +24,8 @@ def UpdateView(request,username):
         user.profiles.numOfFollowers = response['followers']
         #now = datetime.now()
         #now = now.strftime("%b %-d,%Y %-I:%M%p")
-        now = datetime.now(tz = timezone.utc)
-        now = now + timedelta(hours = 5, minutes = 30)
+        now = datetime.now(tz = timezone.get_current_timezone())
+        # now = now + timedelta(hours = 5, minutes = 30)
         user.profiles.lastUpdated = now
         user.profiles.save()
         #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
