@@ -20,8 +20,10 @@
     {% endif %}
   </header>
   <main>
+    {%load tz%}{% timezone "Asia/Kolkata" %}
     {% block content %}
     {% endblock %}
+    {% endtimezone %}
   </main>
 </body>
 </html>
