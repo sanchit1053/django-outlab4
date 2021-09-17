@@ -19,18 +19,19 @@ def UpdateView(request,username):
     response = requests.get(f" https://api.github.com/users/{username}")
     response = response.json()
     f = "%Y-%m-%dT%H:%M:%SZ"
-    #tz = pytz.timezone('Asia/Kolkata')
+    tz = pytz.timezone('Asia/Kolkata')
     if response.get('followers') != None:
         user.profiles.numOfFollowers = response['followers']
         #now = datetime.now()
         #now = now.strftime("%b %-d,%Y %-I:%M%p")
-        now = datetime.now(tz = timezone.get_current_timezone())
+        now = datetime.now(tz = tz)
         print(timezone.is_aware(now))
         print(now)
-        now = now + timedelta(hours = 5, minutes = 30)
-        print(timezone.is_aware(now))
-        print(now)
+        #now = now + timedelta(hours = 5, minutes = 30)
+        #print(timezone.is_aware(now))
+        #print(now)
         user.profiles.lastUpdated = now
+        time = user.profiles.lastUpdated
         user.profiles.save()
         #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
 
@@ -44,5 +45,5 @@ def UpdateView(request,username):
                 name = repo['name']
                 stars = repo['stargazers_count']
                 t,c = repository.objects.update_or_create(profiles = profile, name = name , defaults={'name' : name, 'stars' : stars})
-    context = {'pro':user}
+    context = {'pro':user, 'time': time}
     return render(request, 'profile.html', context) 
