@@ -25,15 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#dotenv_file = os.path.join(BASE_DIR, ".env")
-#if os.path.isfile(dotenv_file):
-#    dotenv.load_dotenv(dotenv_file)
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # UPDATE secret key
-SECRET_KEY = os.getenv('SECRET_KEY','t3tqvpbl-20xa+=mppx1+b@^u=_h!ej@1v3m^j_=%8c5pe!v1-')
+SECRET_KEY = os.getenv('SECRET_KEY',os.environ['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -60,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'
@@ -87,15 +89,18 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd1d846t07omhed',
-        'USER': 'bfguyaquxpbvlt',
-        'PASSWORD': '1e5dd4e1f642dc7d50b7687caa27b61ce19569cba82a54dfd0719c64e6dce522',
-        'PORT': 5432,
-        'HOST': 'ec2-44-198-146-224.compute-1.amazonaws.com'
-    }
+    'default' : dj_database_url.config(os.getenv('DATABASE_URL'),os.environ['DATABASE_URL'])
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd1d846t07omhed',
+#         'USER': 'bfguyaquxpbvlt',
+#         'PASSWORD': '1e5dd4e1f642dc7d50b7687caa27b61ce19569cba82a54dfd0719c64e6dce522',
+#         'PORT': 5432,
+#         'HOST': 'ec2-44-198-146-224.compute-1.amazonaws.com'
+#     }
+# }
 
 #DATABASES['default'] = dj_database_url.config('postgres://bfguyaquxpbvlt:1e5dd4e1f642dc7d50b7687caa27b61ce19569cba82a54dfd0719c64e6dce522@ec2-44-198-146-224.compute-1.amazonaws.com:5432/d1d846t07omhed', conn_max_age=600)
 # Password validation
@@ -137,6 +142,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

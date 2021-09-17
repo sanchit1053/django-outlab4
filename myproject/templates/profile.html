@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}myProfile{% endblock %}
-
+<!--<button type = "button"  onclick = "location.href = '{% url 'update' pro.username %}'" > Update </button>-->
 {% block content %}
 <H2>{{pro.first_name}} {{pro.last_name}} (@{{pro.username}})</H2> 
 <ol>
     <li>{{pro.profiles.numOfFollowers}} Followers
-    <li>profile last updated: {{user.profiles.lastUpdated}} {% if pro.username == user.username %}<button type = "button"  onclick = "location.href = '{% url 'update' pro.username %}'" > Update </button> {%endif%}
+    <li>profile last updated: {{user.profiles.lastUpdated}} {% if pro.username == user.username %}<a href = "{% url 'update' pro.username %}" > Update </a> {%endif%}
 </ol>
 
 {% for obj in pro.profiles.repository_set.all %}
