@@ -24,15 +24,15 @@ def UpdateView(request,username):
         user.profiles.numOfFollowers = response['followers']
         #now = datetime.now()
         #now = now.strftime("%b %-d,%Y %-I:%M%p")
-        now = datetime.now(tz = tz)
-        print(timezone.is_aware(now))
-        print(now)
+        #now = datetime.now(tz = tz)
+        #print(timezone.is_aware(now))
+        #print(now)
         #now = now + timedelta(hours = 5, minutes = 30)
         #print(timezone.is_aware(now))
         #print(now)
-        user.profiles.lastUpdated = now
-        time = user.profiles.lastUpdated
-        user.profiles.save()
+        #user.profiles.lastUpdated = now
+        #time = user.profiles.lastUpdated
+        user.save()
         #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
 
     profile = user.profiles
@@ -45,5 +45,5 @@ def UpdateView(request,username):
                 name = repo['name']
                 stars = repo['stargazers_count']
                 t,c = repository.objects.update_or_create(profiles = profile, name = name , defaults={'name' : name, 'stars' : stars})
-    context = {'pro':user, 'time': time}
+    context = {'pro':user}# 'time': time}
     return render(request, 'profile.html', context) 
