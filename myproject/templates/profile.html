@@ -5,7 +5,7 @@
 {% block content %}
 <div class ="ms-4 mt-4">
 <H2>{{pro.first_name}} {{pro.last_name}} (@{{pro.username}})</H2> 
-<div class ="ms-5 mt-2"> 
+<div class ="ms-3 mt-2"> 
 <i> {{pro.profiles.numOfFollowers}} Followers <br>
     profile last updated: {{user.profiles.lastUpdated}} {% if pro.username == user.username %}<a class = "btn btn-primary" href = "{% url 'update' pro.username %}" role = "button"> Update </a> {%endif%}
 </i>
