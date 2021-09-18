@@ -2,9 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width-10px, initial-scale=1">
   <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
   {% load static %}
-  <link rel = "stylesheet" href= "{% static 'css/styles.css' %}" >
+  <link rel = "stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+  <link rel = "stylesheet" href= "{% static 'css/styles.css' %}" > 
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>  
 </head> 
 <body>
   <header>
@@ -12,13 +15,13 @@
     
     <h1> Welcome to Github Profiles</h1>
     {%if user.is_authenticated %}
-      <a href = "{% url 'explore' %}"> explore </a> &nbsp;
-      <a href = "{% url 'profile' user.username %}"> My Profile </a> &nbsp;  
-      <a href="{% url 'logout' %}">Log Out</a>
+      <a class = "btn btn-primary" href = "{% url 'explore' %}" role = "button"> explore </a> &nbsp;
+      <a class = "btn btn-primary" href = "{% url 'profile' user.username %}" role = "button"> My Profile </a> &nbsp;  
+      <a class = "btn btn-primary" href="{% url 'logout' %}" role = "button">Log Out</a>
       
     {% else %}
-      <a href="{% url 'signup' %}">Sign Up</a>
-      <a href="{% url 'login' %}">Log In</a>
+      <a class = "btn btn-primary" href="{% url 'signup' %}" role = "button">Sign Up</a>
+      <a class = "btn btn-primary" href="{% url 'login' %}" role = "button">Log In</a>
     {% endif %}
   </header>
   <main>

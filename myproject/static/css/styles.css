@@ -12,16 +12,16 @@ H1{
     color: black;
 }
 
-a{
+/* a{
     background-color: rgb(32, 92, 223);
     padding: 10px;
     border-radius: 5px;
     color:whitesmoke;
     text-align: center;
     text-decoration: none;
-}
+} */
 
-a.names{
+div.names{
     color: rgb(32, 92, 223);
     padding: 10px;
     border-radius: 5px;
@@ -29,4 +29,8 @@ a.names{
     border-left:2px solid rgb(32, 92, 223);
     border-right:2px solid rgb(32, 92, 223);
     text-decoration: none;
+}
+
+body{
+    background-color: whitesmoke;
 }

@@ -3,10 +3,9 @@
 {% block title %}Explore{% endblock %}
 
 {% block content %}
+<div class="list-group list-group-numbered">
 {% for user in users%}
-    <br>
-    <ul>
-        <li> <a class = "names" href = "{% url 'profile' user.username %}"> {{user.username}} </a>
-    </ul>
+    <a class = "list-group-item list-group-item-action" href = "{% url 'profile' user.username %}"> <div class = "names">{{user.username}}</div> </a>
 {% endfor %}
+</div>
 {% endblock %}
