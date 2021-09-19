@@ -17,17 +17,6 @@ class profiles(models.Model):
         if created:
             profiles.objects.create(user=instance)
 
-        # username = None
-        # username = instance.username
-        # response = requests.get(f" https://api.github.com/users/{username}")
-        # response = response.json()
-        # if response:
-        #     instance.profiles.numOfFollowers = response['followers']
-        #     #instance.profiles.lastUpdated = response['updated_at']
-        #     now = datetime.now()
-        #     user.profiles.lastUpdated = now 
-
-
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profiles.save()

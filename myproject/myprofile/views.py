@@ -16,34 +16,32 @@ def ProfileView(request,username):
 
 def UpdateView(request,username):
     user = User.objects.get(username = username)
-    response = requests.get(f" https://api.github.com/users/{username}")
-    response = response.json()
-    f = "%Y-%m-%dT%H:%M:%SZ"
-    tz = pytz.timezone('Asia/Kolkata')
-    if response.get('followers') != None:
-        user.profiles.numOfFollowers = response['followers']
-        #now = datetime.now()
-        #now = now.strftime("%b %-d,%Y %-I:%M%p")
-        #now = datetime.now(tz = tz)
-        #print(timezone.is_aware(now))
-        #print(now)
-        #now = now + timedelta(hours = 5, minutes = 30)
-        #print(timezone.is_aware(now))
-        #print(now)
-        #user.profiles.lastUpdated = now
-        #time = user.profiles.lastUpdated
-        user.save()
-        #user.profiles.lastUpdated = datetime.strptime(response['updated_at'] , f) 
-
+    try:
+        response = requests.get(f" https://api.github.com/users/{username}")
+        response = response.json()
+        # f = "%Y-%m-%dT%H:%M:%SZ"
+        tz = pytz.timezone('Asia/Kolkata')
+        if response.get('followers') != None:
+            user.profiles.numOfFollowers = response['followers']
+            #now = datetime.now()
+            #now = now.strftime("%b %-d,%Y %-I:%M%p")
+            #now = datetime.now(tz = tz)
+            #now = now + timedelta(hours = 5, minutes = 30)
+            user.save()
+    except:
+        pass
     profile = user.profiles
-    response2 = requests.get(f" https://api.github.com/users/{username}/repos")
-    response2 = response2.json()
+    try:
+        response2 = requests.get(f" https://api.github.com/users/{username}/repos")
+        response2 = response2.json()
 
-    if response:
-        for repo in response2:
-            if repo.get('name'):
-                name = repo['name']
-                stars = repo['stargazers_count']
-                t,c = repository.objects.update_or_create(profiles = profile, name = name , defaults={'name' : name, 'stars' : stars})
+        if response:
+            for repo in response2:
+                if repo.get('name'):
+                    name = repo['name']
+                    stars = repo['stargazers_count']
+                    t,c = repository.objects.update_or_create(profiles = profile, name = name , defaults={'name' : name, 'stars' : stars})
+    except:
+        pass
     context = {'pro':user}# 'time': time}
     return render(request, 'profile.html', context) 
